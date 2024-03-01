@@ -1,6 +1,12 @@
 var canvas = document.getElementById('main-canvas');
 const ctx = canvas.getContext('2d');
 
+const socket = new WebSocket(`ws://${window.location.hostname}:8765`)
+
+//
+// CANVAS STUFF
+//
+
 function setCanvasSize() {
     console.log("creating canvas")
     canvas.width = document.body.clientWidth;
@@ -43,11 +49,77 @@ function drawPixel(x, y) {
     x = Math.floor(x / 10) * 10;
     y = Math.floor(y / 10) * 10;
     ctx.fillRect(x, y, 10.25, 10.25);
+    SendMessage(x, y)
 }
 
+//
+// COMMUNICATION STUFF
+// 
 
+function connectToServer() {
+    
+    socket.onopen = function () {
+        console.log("Status: Connected\n");
+    };
+    
+    socket.onmessage = function (e) {
+        var j_obj = JSON.parse(e.data);
+        console.log("Server: " + j_obj + "\n");
+        // drawPixel();
+    };
+}
 
-window.onload = setCanvasSize;
+function SendMessage(x, y) {
+    
+    var obj_to_send = {
+        "cmd": "pxl",
+        "data":
+            {
+                "timeMS": Date.now(),
+                "xCoord": parseInt(x),
+                "yCoord": parseInt(y),
+                "color": ctx.fillStyle,
+            },
+    }
+    
+    console.log(obj_to_send);
+    socket.send(JSON.stringify(obj_to_send));
+}
+
+//
+// STARTUP STUFF
+//
+
+function startUp() {
+    connectToServer();
+    setCanvasSize();
+    requestAccess();
+}
+
+function requestAccess() {
+    var video = document.createElement('video');
+    video.setAttribute('playsinline', '');
+    video.setAttribute('autoplay', '');
+    video.setAttribute('muted', '');
+    video.style.width = '200px';
+    video.style.height = '200px';
+
+    /* Setting up the constraint */
+    var facingMode = "user"; // Can be 'user' or 'environment' to access back or front camera (NEAT!)
+    var constraints = {
+        audio: false,
+        video: {
+            facingMode: facingMode
+        }
+    };
+
+    /* Stream it to video element */
+    navigator.mediaDevices.getUserMedia(constraints).then(function success(stream) {
+        video.srcObject = stream;
+    });
+}
+
+window.onload = startUp;
 
 // zur synchronisation vom canvas websockets verwendetn 
 
