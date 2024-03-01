@@ -1,0 +1,11 @@
+version: '3.8'
+
+services:
+  nginx:
+    image: nginx
+    ports:
+      - "8080:80"
+    volumes:
+      - ./app/templates:/usr/share/nginx/html
+      - ./data:/usr/share/nginx/html/data
+    restart: always

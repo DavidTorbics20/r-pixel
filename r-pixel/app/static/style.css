@@ -1,0 +1,44 @@
+html, body {
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden;
+}
+
+#color-picker {
+    border-radius: 25px 25px 0px 0px;
+    width:990px;
+    position: absolute;
+    background-color: white;
+    z-index: 999;
+    bottom: 0;
+    left: 50%;
+    right: 50%;
+    margin-left:-495px;
+    border-style: solid solid hidden solid;
+    border-color: black;
+    border-width: 3px;
+}
+
+#color-picker li {
+    text-decoration: none;
+    float: left;
+    list-style: none;
+    text-align: center;
+}
+
+#color-picker li div {
+    display: block;
+}
+
+.color-btn {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-bottom: 10px;
+}
+
+.last-btn {
+    margin-right: 55px;
+}

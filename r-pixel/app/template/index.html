@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>R-Pixel</title>
+
+    <link rel="stylesheet" href="../static/style.css">
+
+</head>
+<body>
+    <canvas id="main-canvas" style="border:1px solid #000000;"></canvas>
+    <div id="color-picker">
+        <ul>
+            <li><button class="color-btn" onclick="colorPicker([255, 255, 255])" style="background-color: white;"></button></li>
+            <li><button class="color-btn" onclick="colorPicker([211, 211, 211])" style="background-color: rgb(211, 211, 211);"></button></li>
+            <li><button class="color-btn" onclick="colorPicker([128, 128, 128])" style="background-color: rgb(128, 128, 128);"></button></li>
+            <li><button class="color-btn" onclick="colorPicker([47, 47, 47])" style="background-color: rgb(47, 47, 47);"></button></li>
+            <li><button class="color-btn" onclick="colorPicker([128, 0, 128])" style="background-color: purple;"></button></li>
+            <li><button class="color-btn" onclick="colorPicker([216, 112, 147])" style="background-color: rgb(216, 112, 147);"></button></li>
+            <li><button class="color-btn" onclick="colorPicker([255, 0, 0])" style="background-color: red;"></button></li>
+            <li><button class="color-btn" onclick="colorPicker([165, 42, 42])" style="background-color: brown"></button></li>
+            <li><button class="color-btn" onclick="colorPicker([255, 165, 0])" style="background-color: orange;"></button></li>
+            <li><button class="color-btn" onclick="colorPicker([255, 255, 0])" style="background-color: yellow;"></button></li>
+            <li><button class="color-btn" onclick="colorPicker([173, 255, 47])" style="background-color: greenyellow;"></button></li>
+            <li><button class="color-btn" onclick="colorPicker([0, 149, 0])" style="background-color: rgb(0, 149, 0);"></button></li>
+            <li><button class="color-btn" onclick="colorPicker([173, 216, 230])" style="background-color: lightblue"></button></li>
+            <li><button class="color-btn" onclick="colorPicker([79, 114, 255])" style="background-color: rgb(79, 114, 255);"></button></li>
+            <li><button class="color-btn last-btn" onclick="colorPicker([43, 43, 255])" style="background-color: rgb(43, 43, 255);"></button></li>
+        </ul>
+    </div>
+</body>
+</html>
+
+<script src="../static/script.js"></script> 
