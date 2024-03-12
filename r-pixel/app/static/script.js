@@ -1,7 +1,8 @@
 var canvas = document.getElementById('main-canvas');
 const ctx = canvas.getContext('2d');
 
-const socket = new WebSocket(`ws://${window.location.hostname}:8765`)
+console.log(window.location.hostname);
+const socket = new WebSocket(`ws://192.168.1.164:8765/r-pixel/app/template/`) // 172.31.181.197
 
 //
 // CANVAS STUFF
@@ -57,32 +58,42 @@ function drawPixel(x, y) {
 // 
 
 function connectToServer() {
-    
+
     socket.onopen = function () {
         console.log("Status: Connected\n");
+        
+        var obj_to_send = {
+            "cmd": "data",
+        }
+        socket.send(JSON.stringify(obj_to_send));
     };
-    
+
     socket.onmessage = function (e) {
-        var j_obj = JSON.parse(e.data);
-        console.log("Server: " + j_obj + "\n");
+        console.log("Server: " + e.data + "\n");
+        console.log(e.data);
+        let data = JSON.parse(String(e.data));
+        for (let i = 0; i < data.length; i++) {
+            ctx.fillStyle = String(data[i]['color']);
+            ctx.fillRect(data[i]['xCoord'], data[i]['yCoord'], 10.25, 10.25);
+        }
         // drawPixel();
     };
 }
 
 function SendMessage(x, y) {
-    
+
     var obj_to_send = {
-        "cmd": "pxl",
-        "data":
-            {
-                "timeMS": Date.now(),
-                "xCoord": parseInt(x),
-                "yCoord": parseInt(y),
-                "color": ctx.fillStyle,
-            },
+        'cmd': 'pxl',
+        'data':
+        {
+            'timeMS': Date.now(),
+            'xCoord': parseInt(x),
+            'yCoord': parseInt(y),
+            'color': ctx.fillStyle,
+        },
     }
-    
-    console.log(obj_to_send);
+
+    // console.log(obj_to_send);
     socket.send(JSON.stringify(obj_to_send));
 }
 
@@ -97,6 +108,7 @@ function startUp() {
 }
 
 function requestAccess() {
+
     var video = document.createElement('video');
     video.setAttribute('playsinline', '');
     video.setAttribute('autoplay', '');
@@ -121,11 +133,11 @@ function requestAccess() {
 
 window.onload = startUp;
 
-// zur synchronisation vom canvas websockets verwendetn 
+// zur synchronisation vom canvas websockets verwendetn
 
 // der ebnutzer setzt ein pixel -> das geht an den server weiter
 // -> der schaut ob eh die 5 minuten vergangen sind -> wenn ja pixel setzen & speichern ->
-// andere benutzer benachrichtigen das ein pixel gesetzt wurde und die information 
+// andere benutzer benachrichtigen das ein pixel gesetzt wurde und die information
 // auch an diese benutzer schicken
 
 // also ein websocket pro benutzer der immer zum server offen ist
