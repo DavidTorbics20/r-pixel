@@ -95,3 +95,6 @@ async def main():
 asyncio.run(main())
 
 # 172.31.182.131:5500/r-pixel/app/template/
+
+# git rm -rf --cached . << use when want to remove
+# file from repo and add to .gitignore

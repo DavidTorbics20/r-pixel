@@ -1,11 +1,6 @@
-version: '3.8'
-
+version: '3'
 services:
-  nginx:
-    image: nginx
+  websocket_server:
+    build: .
     ports:
-      - "8080:80"
-    volumes:
-      - ./app/templates:/usr/share/nginx/html
-      - ./data:/usr/share/nginx/html/data
-    restart: always
+      - "8765:8765"
