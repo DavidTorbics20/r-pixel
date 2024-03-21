@@ -1,5 +1,3 @@
 asyncio
-csv
-json
 pandas
 websockets

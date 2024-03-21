@@ -132,6 +132,7 @@ function requestAccess() {
 }
 
 window.onload = startUp;
+window.onresize = setCanvasSize;
 
 // zur synchronisation vom canvas websockets verwendetn
 
