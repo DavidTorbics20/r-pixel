@@ -2,7 +2,7 @@ var canvas = document.getElementById('main-canvas');
 const ctx = canvas.getContext('2d');
 
 console.log(window.location.hostname);
-const socket = new WebSocket(`ws://localhost:8765/r-pixel/app/template/`) // 172.31.181.197
+const socket = new WebSocket(`ws://${window.location.hostname}:8765/`) // 172.31.181.197
 
 //
 // CANVAS STUFF

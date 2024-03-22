@@ -11,4 +11,4 @@ COPY app/. .
 # Create an empty data.csv file
 RUN touch data.csv
 
-CMD [ "python", "./server.py" ]
+CMD [ "python3", "./server.py" ]
