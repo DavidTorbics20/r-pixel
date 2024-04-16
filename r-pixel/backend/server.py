@@ -7,8 +7,9 @@ import pandas as pd
 from websockets.server import serve
 import websockets
 
-FILEPATH = './r-pixel/data/database.csv'
+FILEPATH = './database.csv'
 SERVER_IP = "0.0.0.0"
+SERVER_PORT = 8765
 CLIENTS = set()
 
 
@@ -37,11 +38,11 @@ async def notifyConnectedUsers(data):
         ])
 
 
-async def saveData(user_data):
+async def saveData(user_data=None, filepath=FILEPATH):
 
     print("saving data")
     df = pd.DataFrame(user_data, index=[0])
-    existing_df = pd.read_csv(FILEPATH)
+    existing_df = pd.read_csv(filepath)
     combined_df = pd.concat([existing_df, df], ignore_index=True)
     combined_df = combined_df.drop_duplicates(subset=['xCoord', 'yCoord'],
                                               keep='last')
@@ -83,7 +84,7 @@ async def main():
     async with serve(
         onUserConnect,
         SERVER_IP,
-        8765,
+        SERVER_PORT,
         extra_headers=[
             ("Access-Control-Allow-Origin", "*"),
             ("Content-Security-Policy", "default-src 'self'"),

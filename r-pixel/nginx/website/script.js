@@ -1,8 +1,10 @@
 var canvas = document.getElementById('main-canvas');
 const ctx = canvas.getContext('2d');
+var current_color = [0, 0, 0]; // do transparency
+// https://stackoverflow.com/questions/2359537/how-to-change-the-opacity-alpha-transparency-of-an-element-in-a-canvas-elemen
 
 console.log(window.location.hostname);
-const socket = new WebSocket(`ws://${window.location.hostname}:8765/`) // 172.31.181.197
+const socket = new WebSocket(`ws://${window.location.hostname}:8765`) // 172.31.181.197
 
 //
 // CANVAS STUFF
@@ -29,6 +31,7 @@ function setCanvasSize() {
 
 function colorPicker(newColor) {
     console.log(newColor);
+    current_color = newColor;
     ctx.fillStyle = `rgb(${newColor[0]}, ${newColor[1]}, ${newColor[2]})`
 }
 
@@ -75,6 +78,7 @@ function connectToServer() {
         for (let i = 0; i < data.length; i++) {
             ctx.fillStyle = String(data[i]['color']);
             ctx.fillRect(data[i]['xCoord'], data[i]['yCoord'], 10.25, 10.25);
+            ctx.fillStyle = `rgb(${current_color[0]}, ${current_color[1]}, ${current_color[2]})`;
         }
         // drawPixel();
     };
