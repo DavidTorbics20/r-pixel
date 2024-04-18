@@ -1,11 +1,12 @@
 import asyncio
 import csv
 import json
+import os
 
 import pandas as pd
 
 from websockets.server import serve
-import websockets
+import websockets 
 
 FILEPATH = './database.csv'
 SERVER_IP = "0.0.0.0"
@@ -21,9 +22,7 @@ async def send(websocket, message):
 
 
 async def myBroadcast(message):
-    print("broadcasting")
-    print("broadcasted: ")
-    print(message)
+    print("broadcasted: " + str(message))
 
     m = json.loads(message)
     m_list = [m['data']]
@@ -41,20 +40,27 @@ async def notifyConnectedUsers(data):
 async def saveData(user_data=None, filepath=FILEPATH):
 
     print("saving data")
-    df = pd.DataFrame(user_data, index=[0])
-    existing_df = pd.read_csv(filepath)
-    combined_df = pd.concat([existing_df, df], ignore_index=True)
-    combined_df = combined_df.drop_duplicates(subset=['xCoord', 'yCoord'],
-                                              keep='last')
-    combined_df.to_csv(FILEPATH, header=True, index=False)
+    if not os.path.exists(filepath):
+        raise Exception("File not found")
+    else:
+        if len(user_data) == 4:
+            df = pd.DataFrame(user_data, index=[0])
+            existing_df = pd.read_csv(filepath)
+            combined_df = pd.concat([existing_df, df], ignore_index=True)
+            combined_df = combined_df.drop_duplicates(subset=['xCoord', 'yCoord'],
+                                                    keep='last')
+            combined_df.to_csv(filepath, header=True, index=False)
 
 
-def getData():
-    with open(FILEPATH, 'r') as file:
-        csv_reader = csv.DictReader(file)
-        data = [row for row in csv_reader]
+def getData(filepath=FILEPATH):
+    if not os.path.exists(filepath):
+        raise Exception("File not found")
+    else:
+        with open(filepath, 'r') as file:
+            csv_reader = csv.DictReader(file)
+            data = [row for row in csv_reader]
 
-    return data
+        return data
 
 
 async def onUserConnect(websocket):
@@ -93,9 +99,8 @@ async def main():
         await asyncio.Future()  # run forever
 
 
-asyncio.run(main())
-
-# 172.31.182.131:5500/r-pixel/app/template/
+if __name__ == "__main__":
+    asyncio.run(main())
 
 # git rm -rf --cached . << use when want to remove
 # file from repo and add to .gitignore

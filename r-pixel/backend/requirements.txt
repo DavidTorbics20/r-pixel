@@ -1,3 +1,7 @@
 asyncio
 pandas
 websockets
+pytest
+pytest-asyncio
+pillow
+tqdm

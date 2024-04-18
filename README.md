@@ -6,10 +6,10 @@ The goal for this project is to implement the base funcionality of r/place and m
 
 ## Specifications 
 
- - [ ] Create the website with all functionalities and run on localhost
- - [ ] Save coordinates, color, time and the user that put down the pixel in a csv file
- - [ ] Reach website through websockets 
- - [ ] Create Docker compose file
+ - [X] Create the website with all functionalities and run on localhost
+ - [X] Save coordinates, color, time and the user that put down the pixel in a csv file
+ - [X] Reach website through websockets 
+ - [X] Create Docker compose file
  - [ ] Write tests for the saving functionalities
 
 
